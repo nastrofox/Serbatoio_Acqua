@@ -67,7 +67,7 @@ namespace Serbatoio_D_Acqua
         {
             set 
             {
-                if (_quantmax < _livelloattuale)
+                if (value < 0)
                 {
                     throw new Exception("quantità massima superata");
                 }else
@@ -79,7 +79,7 @@ namespace Serbatoio_D_Acqua
         {
             set 
             {
-                if (_livelloattuale < _quantmin)
+                if (value <0)
                 {
                     throw new Exception("quantità minima superata");
                 }
@@ -92,14 +92,54 @@ namespace Serbatoio_D_Acqua
         {
             set
             {
-                if (_quantmax < _livelloattuale || _livelloattuale < _quantmin)
+                if (_quantmax < value || value < _quantmin)
                 {
-                    throw new Exception("livello attuale troppo alto");
+                    throw new Exception("livello attuale troppo alto o basso");
                 }
                 else
                 _livelloattuale = value;
             }
             get { return _livelloattuale; }
+        }
+
+
+        public void aggiungi(float delta)
+        {
+            if (delta <= 0)
+            {
+                throw new Exception("l' acqua aggiunta non è abbastanza");
+            }
+            else if (delta + _livelloattuale > _quantmax)
+            {
+                throw new Exception("livello massimo superato");
+            }
+            else
+                delta +=_livelloattuale;
+        }
+        public void rimuovi(float gamma)
+        {
+            if (gamma <= 0)
+            {
+                throw new Exception("l' acqua aggiunta non è abbastanza");
+            }
+            else if (gamma - _livelloattuale < _quantmin)
+            {
+                throw new Exception("livello minimo superato");
+            }
+            else
+                gamma -= _livelloattuale;
+        }
+        public string visualizza(float livello)
+        {
+            return livello.ToString();
+        }
+        public string ToString()
+        {
+            return Numeroseriale + " " + Modello + " " + Produttore + " " + Quantmax + " " + Quantmin + " " + Livelloattuale;
+        }
+        public float confronta(serbatoio s2)
+        {
+            return this.Livelloattuale - s2.Livelloattuale;
         }
     }
 }
