@@ -141,5 +141,20 @@ namespace Serbatoio_D_Acqua
         {
             return this.Livelloattuale - s2.Livelloattuale;
         }
+        public float svuota(serbatoio s2)
+        {
+            float svuota = 0;
+            svuota = this.Livelloattuale - this.Quantmin;
+            this.Livelloattuale = this.Quantmin;
+            if (s2.Livelloattuale+svuota > s2.Quantmax)
+            {
+                s2.Livelloattuale = s2.Quantmax;
+            }
+            else
+            {
+                s2.Livelloattuale += svuota;
+            }
+            return svuota;
+        }
     }
 }
