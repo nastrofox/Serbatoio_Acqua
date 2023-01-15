@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Serbatoio_D_Acqua
 {
-    internal class serbatoio
+    internal class Serbatoio
     {
         private string _numeroseriale;
         private string _modello;
@@ -15,14 +15,14 @@ namespace Serbatoio_D_Acqua
         private float _quantmin;
         private float _livelloattuale;
 
-        public serbatoio (string numeroseriale, string modello, string produttore, float quantmax, float quantmin, float livelloattuale)
+        public Serbatoio (string numeroseriale, string modello, string produttore, float quantmax, float quantmin, float livelloattuale)
         {
             this.Numeroseriale = numeroseriale;
             this.Modello = modello;
             this.Produttore = produttore;
-            this._quantmax = quantmax;
-            this._quantmin = quantmin;
-            this._livelloattuale = livelloattuale;
+            this.Quantmax = quantmax;
+            this.Quantmin = quantmin;
+            this.Livelloattuale = livelloattuale;
         }
 
 
@@ -111,7 +111,7 @@ namespace Serbatoio_D_Acqua
             }
             else if (delta + _livelloattuale > _quantmax)
             {
-                throw new Exception("livello massimo superato");
+                throw new Exception("livello massimo oltrepassato");
             }
             else
                 delta +=_livelloattuale;
@@ -137,11 +137,11 @@ namespace Serbatoio_D_Acqua
         {
             return Numeroseriale + " " + Modello + " " + Produttore + " " + Quantmax + " " + Quantmin + " " + Livelloattuale;
         }
-        public float confronta(serbatoio s2)
+        public float confronta(Serbatoio s2)
         {
             return this.Livelloattuale - s2.Livelloattuale;
         }
-        public float svuota(serbatoio s2)
+        public float svuota(Serbatoio s2)
         {
             float svuota = 0;
             svuota = this.Livelloattuale - this.Quantmin;
@@ -156,5 +156,15 @@ namespace Serbatoio_D_Acqua
             }
             return svuota;
         }
+        public float partiziona(float numero)
+        {
+            float svuota = 0;
+            svuota = this.Livelloattuale - this.Quantmin;
+            this.Livelloattuale = this.Quantmin;
+            svuota/numero =svuota;
+            return "il tuo serbatoio è stato svuotato e altri "+numero+"sono stati riempiti con "+svuota +" litri";
+        }
+
+
     }
 }

@@ -10,6 +10,9 @@ namespace Serbatoio_D_Acqua
     {
         static void Main(string[] args)
         {
+            Serbatoio s1 = new Serbatoio;
+            Serbatoio s1 = new Serbatoio;
+            s1.confronta()
 
         }
     }
