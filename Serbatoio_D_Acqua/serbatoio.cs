@@ -156,12 +156,12 @@ namespace Serbatoio_D_Acqua
             }
             return svuota;
         }
-        public float partiziona(float numero)
+        public string partiziona(float numero)
         {
             float svuota = 0;
             svuota = this.Livelloattuale - this.Quantmin;
             this.Livelloattuale = this.Quantmin;
-            svuota/numero =svuota;
+            svuota =svuota / numero;
             return "il tuo serbatoio è stato svuotato e altri "+numero+"sono stati riempiti con "+svuota +" litri";
         }
 
