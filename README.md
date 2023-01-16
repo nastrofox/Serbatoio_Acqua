@@ -1,5 +1,6 @@
 # Crotti andrea serbatoio acqua
  Metodi
+ 
 [1] = aggiungi(float delta): una certa quantità d'acqua viene aggiunta al serbatoio. 
 
 [2] = rimuovi(float gamma): una certa quantità d'acqua viene rilasciata dal serbatoio.
