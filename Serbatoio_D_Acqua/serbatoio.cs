@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Serbatoio_D_Acqua
 {
-    internal class Serbatoio
+    public class Serbatoio
     {
         private string _numeroseriale;
         private string _modello;
