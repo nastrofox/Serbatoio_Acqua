@@ -17,15 +17,18 @@ namespace Serbatoio_D_Acqua
 
         public Serbatoio (string numeroseriale, string modello, string produttore, float quantmax, float quantmin, float livelloattuale)
         {
-            this.Numeroseriale = numeroseriale;
-            this.Modello = modello;
-            this.Produttore = produttore;
-            this.Quantmax = quantmax;
-            this.Quantmin = quantmin;
-            this.Livelloattuale = livelloattuale;
+            this._numeroseriale = numeroseriale;
+            this._modello = modello;
+            this._produttore = produttore;
+            this._quantmax = quantmax;
+            this._quantmin = quantmin;
+            this._livelloattuale = livelloattuale;
         }
 
+        public Serbatoio()
+        {
 
+        }
         public string Numeroseriale
         {
             set 
@@ -67,7 +70,11 @@ namespace Serbatoio_D_Acqua
         {
             set 
             {
-                if (value < 0)
+                if (_quantmin >= _quantmax)
+                {
+                    throw new Exception("Quantità massima minore della quantità minima");
+                }
+                else if (value < 0)
                 {
                     throw new Exception("quantità massima superata");
                 }else
@@ -79,7 +86,11 @@ namespace Serbatoio_D_Acqua
         {
             set 
             {
-                if (value <0)
+                if (_quantmin >= _quantmax)
+                {
+                    throw new Exception("Quantità massima minore della quantità minima");
+                }
+                else if (value <0)
                 {
                     throw new Exception("quantità minima superata");
                 }
@@ -109,12 +120,12 @@ namespace Serbatoio_D_Acqua
             {
                 throw new Exception("l' acqua aggiunta non è abbastanza");
             }
-            else if (delta + _livelloattuale > _quantmax)
+            else if (delta + Livelloattuale > Quantmax)
             {
                 throw new Exception("livello massimo oltrepassato");
             }
             else
-                delta +=_livelloattuale;
+                Livelloattuale += delta;
         }
         public void rimuovi(float gamma)
         {
@@ -122,26 +133,37 @@ namespace Serbatoio_D_Acqua
             {
                 throw new Exception("l' acqua aggiunta non è abbastanza");
             }
-            else if (gamma - _livelloattuale < _quantmin)
+            else if (gamma - Livelloattuale < Quantmin)
             {
                 throw new Exception("livello minimo superato");
             }
             else
-                gamma -= _livelloattuale;
+                Livelloattuale -= gamma;
         }
-        public string visualizza(float livello)
+        public string visualizza()
         {
-            return livello.ToString();
+            return ToString2();
         }
         public string ToString()
         {
             return Numeroseriale + " " + Modello + " " + Produttore + " " + Quantmax + " " + Quantmin + " " + Livelloattuale;
         }
-        public float confronta(Serbatoio s2)
+        public string ToString2()
         {
-            return this.Livelloattuale - s2.Livelloattuale;
+            return  "" + Livelloattuale;
         }
-        public float svuota(Serbatoio s2)
+        public string confronta(Serbatoio s2)
+        {
+            string armeno = "";
+            if (this.Livelloattuale - s2.Livelloattuale == 0)
+                armeno = "Il livello dei due serbatoi è uguale";
+            else if (this.Livelloattuale - s2.Livelloattuale>0)
+                armeno = "Il livello del primo serbatoio è maggiore";
+            else if (this.Livelloattuale - s2.Livelloattuale < 0)
+                armeno = "Il livello del primo serbatoio è minore";
+            return armeno;
+        }
+        public void svuota(Serbatoio s2)
         {
             float svuota = 0;
             svuota = this.Livelloattuale - this.Quantmin;
@@ -154,15 +176,19 @@ namespace Serbatoio_D_Acqua
             {
                 s2.Livelloattuale += svuota;
             }
-            return svuota;
         }
-        public string partiziona(float numero)
+        public string partiziona(Serbatoio[] serb)
         {
+            float acqua = this.Livelloattuale;
             float svuota = 0;
             svuota = this.Livelloattuale - this.Quantmin;
             this.Livelloattuale = this.Quantmin;
-            svuota =svuota / numero;
-            return "il tuo serbatoio è stato svuotato e altri "+numero+"sono stati riempiti con "+svuota +" litri";
+            svuota = svuota / serb.Length;
+            for(int i =0; i < serb.Length; i++)
+            {
+                serb[i].Livelloattuale += svuota;
+            }
+            return "il tuo serbatoio è stato svuotato e altri "+serb.Length+"sono stati riempiti con "+svuota +" litri";
         }
 
 
